@@ -1,5 +1,7 @@
 package crudAPI.main.entities;
 
+import java.time.LocalDate;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,9 +10,10 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Size;
+import javax.validation.constraints.FutureOrPresent;
 
 @Entity
-@Table(name = "Patients")
+@Table(name = "Patient")
 public class Patient {
 	
 	@Id
@@ -21,35 +24,42 @@ public class Patient {
 	@Size(min= 3, message = "Name should have atleast 3 characters")	
 	private String name;
 	
-	@Column(name = "patient_address")
-	@Size(min= 3, message = "Address should have atleast 10 characters")
-	private String patient_address;
+	@Column(name = "address")
+	@Size(min= 5, message = "Address should have atleast 5 characters")
+	private String address;
 	
 	@Email
-	@Column(name = "email_Id")
-	private String email_Id;
+	@Column(name = "email")
+	private String email;
 	
-	@Column(name = "phone_number")
+	@Column(name = "phone")
 	@Size(min = 10,max = 10, message = "Not a valid number")
-	private String phone_number;
+	private String phone;
 	
 	@Column(name = "password")
 	@Size(min = 8,max = 15, message = "Password: Min-length is 8 and Max-length is 15")
 	private String password;
+	
+	//Date Format : YYYY-MM-DD 
+	@Column(name = "appointment")
+	@FutureOrPresent
+	private LocalDate appointment;
 
-	public Patient(long id, String name, String patient_address, String email_Id, String phone_number,
-			String password) {
+	public Patient(long id, String name, String address, String email, String phone, String password,
+			LocalDate appointment) {
 		super();
 		this.id = id;
 		this.name = name;
-		this.patient_address = patient_address;
-		this.email_Id = email_Id;
-		this.phone_number = phone_number;
+		this.address = address;
+		this.email = email;
+		this.phone = phone;
 		this.password = password;
+		this.appointment = appointment;
 	}
 
 	public Patient() {
 		super();
+		// TODO Auto-generated constructor stub
 	}
 
 	public long getId() {
@@ -68,28 +78,28 @@ public class Patient {
 		this.name = name;
 	}
 
-	public String getPatient_address() {
-		return patient_address;
+	public String getAddress() {
+		return address;
 	}
 
-	public void setPatient_address(String patient_address) {
-		this.patient_address = patient_address;
+	public void setAddress(String address) {
+		this.address = address;
 	}
 
-	public String getEmail_Id() {
-		return email_Id;
+	public String getEmail() {
+		return email;
 	}
 
-	public void setEmail_Id(String email_Id) {
-		this.email_Id = email_Id;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
-	public String getPhone_number() {
-		return phone_number;
+	public String getPhone() {
+		return phone;
 	}
 
-	public void setPhone_number(String phone_number) {
-		this.phone_number = phone_number;
+	public void setPhone(String phone) {
+		this.phone = phone;
 	}
 
 	public String getPassword() {
@@ -98,6 +108,14 @@ public class Patient {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public LocalDate getAppointment() {
+		return appointment;
+	}
+
+	public void setAppointment(LocalDate appointment) {
+		this.appointment = appointment;
 	}
 	
 }

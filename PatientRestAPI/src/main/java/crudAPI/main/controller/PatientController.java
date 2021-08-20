@@ -32,13 +32,13 @@ public class PatientController {
 	// Gives all the patients details
 	@GetMapping
 	public List<Patient> getAllPatient(){
-		return patientService.getAllPatient();
+		return patientService.getAllPatients();
 	}
 	
 	// Give a patient details of specific id.
 	@GetMapping("{id}")
-	public ResponseEntity<Patient> getPatientsById(@PathVariable("id") long id){
-		return new ResponseEntity<Patient>(patientService.getPatientsById(id), HttpStatus.OK);
+	public ResponseEntity<Patient> getPatientById(@PathVariable("id") long id){
+		return new ResponseEntity<Patient>(patientService.getPatientById(id), HttpStatus.OK);
 	}
 	
 	// Creates a new Patient record.
@@ -56,7 +56,7 @@ public class PatientController {
 	// To delete a record of a patient.
 	@DeleteMapping("{id}")
 	public ResponseEntity<String> deletePatient(@PathVariable("id") long id){
-		patientService.DeletePatient(id);
-		return new ResponseEntity<String>("Patient Data Deleted Successfully", HttpStatus.OK);
+		patientService.deletePatient(id);
+		return new ResponseEntity<String>("Patient data deleted Successfully", HttpStatus.OK);
 	}
 }

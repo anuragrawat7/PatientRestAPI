@@ -2,8 +2,9 @@ package crudAPI.main.service.Impl;
 
 import java.util.List;
 
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
-
 import crudAPI.main.entities.Patient;
 import crudAPI.main.exception.ResourceNotFoundException;
 import crudAPI.main.repository.PatientRepository;
@@ -25,12 +26,12 @@ public class PatientServiceImpl implements PatientService{
 	}
 
 	@Override
-	public List<Patient> getAllPatient() {
+	public List<Patient> getAllPatients() {
 		return patientRepo.findAll();
 	}
 	
 	@Override
-	public Patient getPatientsById(long id) {
+	public Patient getPatientById(long id) {
 		Patient patient = patientRepo.findById(id).orElseThrow(
 				() -> new ResourceNotFoundException("Patient", "Id", id));
 		return patient;
@@ -41,19 +42,34 @@ public class PatientServiceImpl implements PatientService{
 		Patient patient1 = patientRepo.findById(id).orElseThrow(
 			() -> new ResourceNotFoundException("Patient", "Id", id));
 		patient1.setName(patient.getName());
-		patient1.setEmail_Id(patient.getEmail_Id());
-		patient1.setPatient_address(patient.getPatient_address());
-		patient1.setPhone_number(patient.getPhone_number());
+		patient1.setEmail(patient.getEmail());
+		patient1.setAddress(patient.getAddress());
+		patient1.setPhone(patient.getPhone());
 		patient1.setPassword(patient.getPassword());
 		patientRepo.save(patient1);
 		return patient1;
 	}
 
 	@Override
-	public void DeletePatient(long id) {
+	public void deletePatient(long id) {
 		patientRepo.findById(id).orElseThrow(() -> new ResourceNotFoundException("Patient", "Id", id));
 		
 		patientRepo.deleteById(id);
 	}
 
+	@Override
+	public List<Patient> getAllSortedPatient() {
+		return patientRepo.findAll(Sort.by(Direction.ASC, "appointment"));
+	}
+
+	@Override
+	public Patient scheduleAppointmentById(Patient patient, long id) {
+		Patient patientdate = patientRepo.findById(id).orElseThrow(
+				() -> new ResourceNotFoundException("Patient", "Id", id));
+		patientdate.setAppointment(patient.getAppointment());
+		patientRepo.save(patientdate);
+		return patientdate;
+	}
+
+	
 }
