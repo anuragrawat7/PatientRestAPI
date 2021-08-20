@@ -32,6 +32,7 @@ public class Patient {
 	@Column(name = "email")
 	private String email;
 	
+	//phone_number
 	@Column(name = "phone")
 	@Size(min = 10,max = 10, message = "Not a valid number")
 	private String phone;
